@@ -12,7 +12,7 @@
 		$mysqli  = new mysqli($GLOBALS["serverHost"],$GLOBALS["serverUsername"], $GLOBALS["serverPassword"],
 		$GLOBALS["database"]);
 		//valmistan ette SQL käsu
-		$stmt = $mysqli->prepare("INSERT INTO vpamsg (messages) VALUES(?)");
+		$stmt = $mysqli->prepare("INSERT INTO vpamsg (message) VALUES(?)");
 		echo $mysqli ->error;
 		//asendame SSQL käsus küsimärgi päris infoga (andmetüüp, andmed ise)
 		//s-string; i- integer; d-decimal;
@@ -26,6 +26,24 @@
 		$mysqli->close();
 		return $notice;
 		
+		
+		
+	}
+	
+	function listallmessages(){
+		$msgHTML = "";
+		$mysqli  = new mysqli($GLOBALS["serverHost"],$GLOBALS["serverUsername"], $GLOBALS["serverPassword"],
+		$GLOBALS["database"]);
+		$stmt = $mysqli->prepare("SELECT message FROM vpamsg");
+		echo $mysqli->error;
+		$stmt->bind_result($msg);
+		$stmt->execute();
+		while($stmt->fetch()){
+			$msgHTML .="<p>" .$msg ."</p> \n";
+		}
+		$stmt->close();
+		$mysqli->close();
+		return $msgHTML;
 	}
 	
 	//teks sisestuse kontroll
