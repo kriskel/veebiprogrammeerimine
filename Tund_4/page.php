@@ -1,19 +1,32 @@
 <?php
-
+	//kutusme välja funtsioonide faili
+	require("functions.php");
+	
   $firstName = "Kodanik";
   $lastName = "Tundmatu";
+  $fullName = "";
 
   
   //kontrollime kas kasutaja on midagi kijrutanud
   //var_dump($_POST);
   if (isset($_POST["firstName"])) {
-	  $firstName = $_POST["firstName"];
+	  //$firstName = $_POST["firstName"];
+	  $firstName = test_input($_POST["firstName"]);
   }
   if (isset($_POST["lastName"])) {
-	  $lastName = $_POST["lastName"];
+	  //$lastName = $_POST["lastName"];
+	  $lastName = test_input($_POST["lastName"]);
   }
   
- 
+
+//täiesti mõtetu harjutamiseks mõeldud funktsioon
+
+function fullName() {
+  $GLOBALS["fullName"] = $GLOBALS["firstName"] ." " .$GLOBALS["lastName"];
+}
+
+ fullName();
+
   
   ?>
 
@@ -38,14 +51,15 @@
 
 	<hr>
 	
-	<form method= "POST">
+	<form method= "POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 	<label>Eesnimi:</label>
 	<input type="text" name="firstName">
 	<label>Perekonnanimi:</label>
 	<input type="text" name="lastName">
 	<label>Sünniaasta:</label>
 	<input type="number" min="1914" max="2000" value="1999" name="birthYear">
-	<label>Kuu:</label>
+	<label>Sünnikuu:</label>
+	
 	<select name="birthMonth"> <option value="9" selected>september</option>
 		<option value="1">jaanuar</option>
 		<option value="2">veebruar</option>
@@ -68,7 +82,7 @@
 	<hr>
 	<?php
 	  if (isset($_POST["firstName"])) {
-	  echo "<p>Olete elanud järgmistel aastatel: </p>\n";
+	  echo "<p>" .$fullName .", olete elanud järgmistel aastatel: </p>\n";
 	  echo "<ol> \n";
 		for ($i = $_POST["birthYear"]; $i <=date("Y"); $i++){
 		echo "<li>" .$i ."</li> \n";
