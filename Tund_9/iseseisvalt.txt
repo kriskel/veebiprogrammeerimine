@@ -27,7 +27,5 @@ Selleks lehe <head> osas järgmine element:
 </style>
 
 3)Edaspidi, sisselogimisel tuleks kohe ka profiili olemasolu kontrollida ja kõikidele lehtedele see kujundus lisada. Ilmselgelt on mõistlik lisada värvid sessioonimuutujateks.
-4)CREATE TABLE `if18_kristjan_ke_1`.`vpphotos` ( `id` INT(11) NOT NULL AUTO_INCREMENT , `userid` INT(11) NOT NULL , `filename` VARCHAR(40) CHARACTER SET utf8 COLLATE
- utf8_estonian_ci NOT NULL , `created` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP , `alttext` VARCHAR(256) CHARACTER SET utf8 COLLATE utf8_estonian_ci NULL , `privacy` INT(1) NOT NULL , `deleted` DATE NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 
 Edu.ee
