@@ -4,19 +4,19 @@
   session_start();
 	
 	function addPhotoData($fileName, $altText, $privacy){
-		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
-    $stmt = $mysqli->prepare("INSERT INTO vpphotos (userid, filename, alt, privacy) VALUES (?, ?, ?, ?)");
-			echo $mysqli->error;
-		if(empty($privacy)){
-			$privacy = 3;
+	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+  $stmt = $mysqli->prepare("INSERT INTO vpphotos (userid, filename, alttext, privacy) VALUES (?, ?, ?, ?)");
+	echo $mysqli->error;
+	if(empty($privacy)){
+		$privacy = 3;
 		}
-		$stmt->bind_param("issi", $_SESSION["userId"], $fileName, $altText, $privacy);
-		if($stmt->execute()){
-			echo "Andmebaasiga on ka korras";
-		}
-		else {
+	$stmt->bind_param("issi", $_SESSION["userId"], $fileName, $altText, $privacy);
+	if($stmt->execute()){
+		echo "Andmebaasiga on ka korras";
+		echo $mysqli->insert_id;
+	} else {
 			echo "Andmebaasiga läks nihu";
-		}
+	}
 		$stmt->close();
 		$mysqli->close();
 	}

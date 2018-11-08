@@ -10,12 +10,12 @@
   //logime välja
   if(isset($_GET["logout"])){
 	session_destroy();
-    header("Location: index_1.php");
+  header("Location: index_1.php");
 	exit();
   }
   
   //piltide laadimise osa
-	$target_dir = "../";
+	$target_dir = "../vp_pic_uploads/";
 	$uploadOk = 1;
 	
 	// Check if image file is a actual image or fake image
@@ -30,8 +30,8 @@
 			//$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 			$timeStamp = microtime(1) * 10000;
 			
-			$target_File_Name = "vp_" .$timeStamp ."." .$imageFileType;
-			$target_file = $target_dir . $target_File_Name;
+			$target_file_name = "vp_" .$timeStamp ."." .$imageFileType;
+			$target_file = $target_dir .$target_file_name;
 			
 			
 			$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
@@ -94,24 +94,23 @@
 				
 				//vesimärk
 				$waterMark = imagecreatefrompng("../vp_picfiles/vp_logo_w100_overlay.png");
-					$waterMarkWidth = imagesx($waterMark);
-					$waterMarkHeight = imagesx($waterMark);
-					$waterMarkPosx = $newWidth - $waterMarkWidth - 10;
-					$watermarkPosy = $newHeight - $waterMarkHeight -10;
-					imageCopy($myImage, $waterMark, $waterMarkPosx, $watermarkPosy, 0, 0, $waterMarkWidth, $waterMarkHeight);
+				$waterMarkWidth = imagesx($waterMark);
+				$waterMarkHeight = imagesy($waterMark);
+				$waterMarkPosX = $newWidth - $waterMarkWidth - 10;
+				$waterMarkPosY = $newHeight - $waterMarkHeight - 10;
+				imagecopy($myImage, $waterMark, $waterMarkPosX, $waterMarkPosY, 0, 0, $waterMarkWidth, $waterMarkHeight);
+				
 				//tekst vesimärgina
-				$textToImage = "Veebiprogrammerimine";
+				$textToImage = "Veebiprogrammeerimine";
+				//                   MIS PILT, R, G, B, ALPHA 0 ... 127
 				$textColor = imagecolorallocatealpha($myImage, 255, 255, 255, 60);
-				//Mis pilt, R, G, B, ALPHA 0...127
 				imagettftext($myImage, 20, 0, 10, 30, $textColor, "../vp_picfiles/ARIALBD.TTF", $textToImage);
-
-
 				
 				//faili salvestamine, jälle sõltuvalt failitüübist
-				if($imageFileType == "jpg" || $imageFileType == "jpeg"){
-					if(imagejpeg($myImage, $target_file, 0)){
+				if($imageFileType == "jpg" or $imageFileType == "jpeg"){
+					if(imagejpeg($myImage, $target_file, 90)){
 						echo "Fail ". basename( $_FILES["fileToUpload"]["name"]). " laeti edukalt üles!";
-							addPhotoData($target_File_Name, $_POST["altText"], $_POST["privacy"]);
+						addPhotoData($target_file_name, $_POST["altText"], $_POST["privacy"]);
 					} else {
 						echo "Vabandame, faili üleslaadimisel tekkis tehniline viga!";
 					}
@@ -119,7 +118,7 @@
 				if($imageFileType == "png"){
 					if(imagepng($myImage, $target_file, 6)){
 						echo "Fail ". basename( $_FILES["fileToUpload"]["name"]). " laeti edukalt üles!";
-							addPhotoData($target_File_Name, $_POST["altText"], $_POST["privacy"]);
+						addPhotoData($target_file_name, $_POST["altText"], $_POST["privacy"]);
 					} else {
 						echo "Vabandame, faili üleslaadimisel tekkis tehniline viga!";
 					}
@@ -128,7 +127,7 @@
 				if($imageFileType == "gif"){
 					if(imagegif($myImage, $target_file)){
 						echo "Fail ". basename( $_FILES["fileToUpload"]["name"]). " laeti edukalt üles!";
-							addPhotoData($target_File_Name, $_POST["altText"], $_POST["privacy"]);
+						addPhotoData($target_file_name, $_POST["altText"], $_POST["privacy"]);
 					} else {
 						echo "Vabandame, faili üleslaadimisel tekkis tehniline viga!";
 					}
@@ -177,12 +176,15 @@
 	<br>
 	<input type="radio" name="privacy" value="1"><label> Avalik pilt</label>
 	<input type="radio" name="privacy" value="2"><label> Ainult sisseloginud kasutajatele</label>
-	<input type="radio" name="privacy" value="3"><label> Privaatne</label>
+	<input type="radio" name="privacy" value="3" checked><label> Privaatne</label>
 	<br>
     <input type="submit" value="Lae pilt üles" name="submitImage">
-		
 </form>
 	
   </body>
 </html>
+
+
+
+
 
