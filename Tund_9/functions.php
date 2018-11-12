@@ -3,22 +3,24 @@
   $database = "if18_kristjan_ke_1";
   session_start();
 	
-	function addPhotoData($fileName, $altText, $privacy){
+	function addPhotoData($fileName, $altText, $privacy=3){
 	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
   $stmt = $mysqli->prepare("INSERT INTO vpphotos (userid, filename, alttext, privacy) VALUES (?, ?, ?, ?)");
 	echo $mysqli->error;
-	if(empty($privacy)){
-		$privacy = 3;
-		}
+//	if(empty($privacy)){
+//		$privacy = 3;
+//		}
+
 	$stmt->bind_param("issi", $_SESSION["userId"], $fileName, $altText, $privacy);
 	if($stmt->execute()){
-		echo "Andmebaasiga on ka korras";
-		echo $mysqli->insert_id;
+		$pic_id = $mysqli->insert_id;
+		echo "Andmebaasiga on ka korras [id=$pic_id]";
 	} else {
 			echo "Andmebaasiga läks nihu";
 	}
 		$stmt->close();
 		$mysqli->close();
+		return $pic_id;
 	}
 
   function readprofilecolors(){
@@ -66,7 +68,7 @@
 		//profiili pole, salvestame
 		$stmt->close();
 		//INSERT INTO vpusers (firstname, lastname, birthdate, gender, email, password) VALUES(?,?,?,?,?,?)"
-		$stmt = $mysqli->prepare("INSERT INTO vpusers_profiles (user_id, description, bg_color, txt_color) VALUES(?,?,?,?)");
+		$stmt = $mysqli->prepare("INSERT IGNORE INTO vpusers_profiles (user_id, description, bg_color, txt_color) VALUES(?,?,?,?)");
 		echo $mysqli->error;
 		$stmt->bind_param("isss", $_SESSION["userId"], $desc, $bgcol, $txtcol);
 		if($stmt->execute()){

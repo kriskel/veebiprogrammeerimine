@@ -1,5 +1,6 @@
 <?php
-  require("functions.php");
+	require_once("functions.php"); 
+	
   
   //kui pole sisseloginud, siis logimise lehele
   if(!isset($_SESSION["userId"])){
@@ -183,8 +184,3 @@
 	
   </body>
 </html>
-
-
-
-
-

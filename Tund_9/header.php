@@ -17,6 +17,7 @@
 	</a>
 	<img src="../vp_picfiles/vp_banner.png" alt="VP 2018 bänner">
 	</div>
+	
   
   
     <h1><?php echo $pageTitle; ?></h1>
