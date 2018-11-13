@@ -24,11 +24,11 @@
 		
 
 		<?php
-		$dirToRead = "../vp_pic_uploads/vp_profile_pic/";
-		$picFiles = 
+		//$dirToRead = "../vp_pic_uploads/vp_profile_pic/";
+		//$picFiles = 
 	  //<img src="../../pics/pilt2.jpg" alt="pilt">
-	  for ($i = 0; $i < count($picFiles); $i ++){
+	  //for ($i = 0; $i < count($picFiles); $i ++){
 	  //echo '<img src="' .$dirToRead .$picFiles[$i] .'" alt="pilt"><br>' ."\n";
-	  }
+	  //}
 		?>
 	
