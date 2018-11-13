@@ -82,8 +82,8 @@
 					$myPhoto = new Photoupload($_FILES["fileToUpload"]["tmp_name"],
 					$imageFileType);
 					$myPhoto->changePhotoSize(600, 400);
-					$myphoto->addWatermark();
-					$myphoto->addTextToImage();
+					$myPhoto->addWatermark();
+					$myPhoto->addTextToImage();
 					$notice = $myPhoto->savePhoto($target_file);
 					unset($myPhoto);
 						//Kui salvestamine õnnestus

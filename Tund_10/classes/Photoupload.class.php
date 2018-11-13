@@ -13,8 +13,8 @@
       }
 	  
 	  function __destruct(){
-			imagedestroy($this->myTempImage);
-			imagedestroy($this->myImage);
+		imagedestroy($this->myTempImage);
+		imagedestroy($this->myImage);
 	  }
 	  
 	  private function createImageFromFile(){
@@ -61,8 +61,7 @@
 			$waterMarkPosX = imagesx($this->myImage) - $waterMarkWidth - 10;
 			$waterMarkPosY = imagesy($this->myImage) - $waterMarkHeight - 10;
 			imagecopy($this->myImage, $waterMark, $waterMarkPosX, $waterMarkPosY, 0, 0, $waterMarkWidth, $waterMarkHeight);
-
-		}
+				}
 		//tekst vesimärgina
 		public function addTextToImage(){
 			$textToImage = "Veebiprogrammeerimine";
@@ -71,47 +70,36 @@
 			imagettftext($this->myImage, 20, 0, 10, 30, $textColor, "../vp_picfiles/ARIALBD.TTF", $textToImage);
 		}
 
-//faili salvestamine, jälle sõltuvalt failitüübist
-public function savePhoto($target_file){
-	$notice = null;
-if($this->imageFileType == "jpg" or $imageFileType == "jpeg"){
-	if(imagejpeg($this->myImage, $target_file, 90)){
-		$notice = 1;
-	} else {
-		$notice = 0;
+		//faili salvestamine, jälle sõltuvalt failitüübist
+		public function savePhoto($target_file){
+			$notice = null;
+		if($this->imageFileType == "jpg" or $imageFileType == "jpeg"){
+			if(imagejpeg($this->myImage, $target_file, 90)){
+				$notice = 1;
+			} else {
+				$notice = 0;
+			}
+		}
+		if($this->imageFileType == "png"){
+			if(imagepng($this->myImage, $target_file, 6)){
+				$notice = 1;
+			} else {
+				$notice = 0;
+			}
+		}
+
+		if($this->imageFileType == "gif"){
+			if(imagegif($this->myImage, $target_file)){
+				$notice =1;
+			} else {
+				$notice = 0;
+			}
+
+			return $notice;
+		}
+
+
+	}//class lõppeb
+
 	}
-}
-if($this->imageFileType == "png"){
-	if(imagepng($this->myImage, $target_file, 6)){
-		$notice = 1;
-	} else {
-		$notice = 0;
-	}
-}
-
-if($this->imageFileType == "gif"){
-	if(imagegif($this->myImage, $target_file)){
-		$notice =1;
-	} else {
-		$notice = 0;
-	}
-
-	return $notice;
-}
-
-
-
-imagedestroy($myTempImage);
-imagedestroy($myImage);
-imagedestroy($waterMark);
-
-/* if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-	echo "Fail ". basename( $_FILES["fileToUpload"]["name"]). " laeti edukalt üles!";
-} else {
-	echo "Vabandame, faili üleslaadimisel tekkis tehniline viga!";
-} */
-}
-}//if !empty lõppeb
-//siin lõppeb nupuvajutuse kontroll
-
 ?>
